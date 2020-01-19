@@ -1,50 +1,39 @@
-var q1 = "Why are there Spirals in the turbines?"
-var o1 = "Options: \n1.Ground Safety \n2.Cooling the Pilot \nKilling Birds"
-var q2 = "Can a Passenger land a plane?"
-var o2 = "Options : 1.Yes\n2.No"
-var q3 = "How dangerous are Thunderstorms?"
-var o3 = "Options : 1.Very Dangerous \n2.Very fun to walk through!"
+const q1 = new Discord.RichEmbed()
+  .setTitle('Quiz for SwissPlus')
+  .setDescription('Reply with Numbers instead of text to detect the answer.')
+  .addField('Question 1', 'Why are there spirals in the Turbines?')
+  .addField('Option 1.', 'Ground Safety')
+  .addField('Option 2.', 'Killing Birds')
+  .setFooter('Developed by WoozyDragon4018#8134')
 if (command === 'quiz'){
-    message.channel.send("Welcome to the QUIZ. \nYou can answer a question only by entering numbers.\n Let's Start.")
     message.channel.send(q1);
-    message.channel.send(o1);
+    const correct = new discord.RichEmbed()
+      .setColor('#00ff00')
+      .setTitle('Correct Answer!')
+      .setDescription('The answer you said was completely correct!')
+
+    const incorrect = new discord.RichEmbed()
+      .setColor('#ff0000')
+      .setTitle('Incorrect Answer!')
+      .setDesctiption('Sorry but the answer you sent was incorrect. Better luck next time mate!')
+
+    const noexist = new discord.RichEmbed()
+      .setColor('#ff0000')
+      .setTitle('Bad Argument.')
+      .setDescription('This option number doesn\'t exist. Please try again by entering numbers.')
+
     const filter = m => m.content.includes('discord');
     const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60 });
     console.log(collector)
     collector.on('collect', message => {
         if (message.content == "1") {
-          message.channel.send("That is Correct! Spirals are used for Ground Safety!")
+          message.channel.send(correct)
+        }
+        else if (message.content == "2") {
+          message.channel.send(incorrect)
         }
         else {
-          message.channel.send("That is Incorrect! Correct answer is `OPTION 1`")
-        }
-    });
-
-    message.channel.send("Welcome to the QUIZ. \nYou can answer a question only by entering numbers.\n Let's Start.")
-    message.channel.send(q2);
-    message.channel.send(o2);
-    const filter = m => m.content.includes('discord');
-    console.log(collector)
-    collector.on('collect', message => {
-        if (message.content == "2") {
-          message.channel.send("That is Correct! A Pilot with training can only land a plane, not a passenger!")
-        }
-        else {
-          message.channel.send("That is Incorrect! Correct answer is `OPTION 1`")
-        }
-    });
-
-    message.channel.send("Welcome to the QUIZ. \nYou can answer a question only by entering numbers.\n Let's Start.")
-    message.channel.send(q3);
-    message.channel.send(o3);
-    const filter = m => m.content.includes('discord');
-    console.log(collector)
-    collector.on('collect', message => {
-        if (message.content == "1") {
-          message.channel.send("That is Correct! Thunderstorms are very dangerous")
-        }
-        else {
-          message.channel.send("That is Incorrect! Correct answer is `OPTION 1`")
+          message.channel.send(noexist)
         }
     });
 }
