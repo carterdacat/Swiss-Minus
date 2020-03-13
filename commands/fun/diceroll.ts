@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from "discord.js";
 
-import { swiss_blue } from "../config";
-import { version } from "../package.json";
+import { swiss_blue } from "../../config";
+import { version } from "../../package.json";
 
 export let name = "diceroll";
 export let description = "Game: Dice roll, returns a number between 1 and 6";

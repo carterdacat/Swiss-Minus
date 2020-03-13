@@ -7,10 +7,5 @@ export let cooldown = 0;
 
 export async function execute(client: Client, message: Message) {
   const m = await message.channel.send("Pinging...");
-  m.edit(
-    `Pong! Latency of Discord messages is ${m.createdTimestamp -
-      message.createdTimestamp} ms. Latency of Discord API is ${
-      client.ws.ping
-    } ms.`
-  );
+  m.edit(`Pong! Latency of Discord messages is ${m.createdTimestamp - message.createdTimestamp} ms. Latency of Discord API is ${client.ws.ping} ms.`);
 }

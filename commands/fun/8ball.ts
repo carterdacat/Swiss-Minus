@@ -1,6 +1,6 @@
 import Discord, { Client, Message, MessageEmbed } from "discord.js";
-import { swiss_blue } from "../config";
-import { version } from "../package.json";
+import { swiss_blue } from "../../config";
+import { version } from "../../package.json";
 
 export let name = "8ball";
 export let description = "Fortune Teller.";
