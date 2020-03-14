@@ -1,6 +1,7 @@
 import SwissClient from "../SwissClient";
 import { Message, MessageEmbed } from "discord.js";
 import { swiss_blue } from "../config";
+import { getRandom } from "../utils";
 
 export let name = "topic";
 export let description = "Gets a random chat topic, if the chat is dying!";
@@ -27,12 +28,11 @@ export async function execute(
   message: Message,
   args: string[]
 ) {
-  const q = quotes[Math.floor(Math.random() * quotes.length)];
   const embed = new MessageEmbed()
     .setTitle("")
     .setAuthor(message.author.tag, message.author.avatarURL())
     .setColor(swiss_blue)
-    .addField("**Topic:**", q)
+    .addField("**Topic:**", getRandom(quotes))
     .setFooter(client.version)
     .setTimestamp();
   await message.channel.send(embed);

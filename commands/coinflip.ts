@@ -1,8 +1,7 @@
 import SwissClient from "../SwissClient";
 import { Message, MessageEmbed } from "discord.js";
-
 import { swiss_blue } from "../config";
-import { version } from "../package.json";
+import { getRandom } from "../utils";
 
 export let name = "coinflip";
 export let description = "Game: Coin, return head or tails to the user";
@@ -16,17 +15,14 @@ export async function execute(
   message: Message,
   _args: string[]
 ) {
-  const answer =
-    Math.random() <= 0.01
-      ? "Side"
-      : coinArray[Math.floor(Math.random() * coinArray.length)];
+  const answer = Math.random() <= 0.01 ? "Side" : getRandom(coinArray);
 
   const embed = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL())
     .setTitle("Coin")
     .setColor(swiss_blue)
     .addField("And the coin landed on", answer)
-    .setFooter(version)
+    .setFooter(client.version)
     .setTimestamp();
   message.channel.send(embed);
 }

@@ -1,6 +1,7 @@
 import SwissClient from "../SwissClient";
 import { Message, MessageEmbed } from "discord.js";
 import { swiss_blue } from "../config";
+import { getRandom } from "../utils";
 
 export let name = "diceroll";
 export let description = "Game: Dice roll, returns a number between 1 and 6";
@@ -14,13 +15,11 @@ export async function execute(
   message: Message,
   _args: string[]
 ) {
-  const answer = diceArray[Math.floor(Math.random() * diceArray.length)];
-
   const embed = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL())
     .setTitle("Dice roll")
     .setColor(swiss_blue)
-    .addField("I threw a dice and it turned out to be", answer)
+    .addField("I threw a dice and it turned out to be", getRandom(diceArray))
     .setFooter(client.version)
     .setTimestamp();
   message.channel.send(embed);

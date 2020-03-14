@@ -3,11 +3,10 @@ import { swiss_blue } from "../config";
 import {
   Message,
   GuildMember,
-  MessageCollector,
-  CollectorFilter,
   MessageEmbed,
   ReactionCollector
 } from "discord.js";
+import { awaitMessage, getRandom } from "../utils";
 
 export let name = "tictactoe";
 export let description = "Play tictactoe with a friend or with the bot!";
@@ -16,28 +15,6 @@ export let usage = "[user]";
 export let cooldown = 60;
 
 const reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
-function getRandom(array: Array<any>) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-async function awaitMessage(message: Message, filter: CollectorFilter) {
-  let promise = new Promise((resolve, reject) => {
-    let x = new MessageCollector(message.channel, filter, { time: 60000 });
-    x.on("collect", msg => {
-      resolve(msg);
-    });
-    x.on("end", a => {
-      reject(a);
-    });
-  });
-  return await promise
-    .then(function(msg: Message) {
-      return msg;
-    })
-    .catch(function(b) {
-      message.channel.send("Oops, your time ran out!");
-      return null;
-    });
-}
 
 export async function execute(
   client: SwissClient,

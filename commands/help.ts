@@ -29,9 +29,8 @@ export async function execute(
       categories[command.category].push(`${command.name}`);
     });
     const helpEmbed = new MessageEmbed()
-      .setTitle("Help!")
       .setColor(swiss_blue)
-      .setAuthor(message.author.tag, message.author.avatarURL())
+      .setAuthor(`${message.author.tag} | Help`, message.author.avatarURL())
       // .addField("Commands:", `${cmds}`)
       .setFooter(client.version)
       .setTimestamp();
@@ -53,10 +52,11 @@ export async function execute(
       })
       .catch(error => {
         const embed = new MessageEmbed()
-          .setTitle("Error!")
-          .setAuthor(message.author.tag, message.author.avatarURL())
+          .setAuthor(
+            `${message.author.tag} | Error`,
+            message.author.avatarURL()
+          )
           .setColor(error_red)
-          .setTitle("Error")
           .setDescription(
             "Unable to send you a dm with my commands! This may be because your dms are turned off. Please try again later."
           )
@@ -86,9 +86,11 @@ export async function execute(
 
   const cmdName = `${command.name}`;
   const cmd = new MessageEmbed()
-    .setTitle("Help")
-    .setAuthor(message.author.tag, message.author.avatarURL())
-    .addField("Command:", cmdName);
+    .setTitle(cmdName)
+    .setColor(swiss_blue)
+    .setAuthor(`${message.author.tag} | Help`, message.author.avatarURL())
+    .addField("Command:", cmdName)
+    .addField("Category:", command.category);
 
   if (command.aliases) {
     const alli = `${command.aliases.join(", ")}`;

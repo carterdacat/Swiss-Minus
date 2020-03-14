@@ -1,6 +1,7 @@
 import SwissClient from "../SwissClient";
 import { Message, GuildMember, MessageEmbed } from "discord.js";
 import { swiss_blue } from "../config";
+import { arrayJoin } from "../utils";
 
 export let name = "permissions";
 export let description = "Check the permissions of a user";
@@ -26,12 +27,19 @@ export async function execute(
     message.member; // Member who sent the message
   const permEmbed = new MessageEmbed();
   permEmbed
-    .setTitle("Permissions")
-    .setAuthor(permMentioned.user.tag, permMentioned.user.avatarURL())
+    .setAuthor(
+      `${permMentioned.user.tag} | Permissions`,
+      permMentioned.user.avatarURL()
+    )
     .setColor(swiss_blue)
-    .addField(
-      `Permissions of ${permMentioned.user.tag}`,
-      `\`${permMentioned.permissions.toArray().join("` , `")}\``
+    .setTitle(`Permissions of ${permMentioned.user.tag}`)
+    .setDescription(
+      `\`${arrayJoin(
+        permMentioned.permissions.toArray(),
+        "`, `",
+        "`",
+        "and"
+      )}\``
     )
     .setFooter(client.version)
     .setTimestamp();

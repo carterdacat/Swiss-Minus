@@ -53,7 +53,10 @@ export async function execute(client: SwissClient, message: Message) {
         cmd.aliases && cmd.aliases.includes(commandName)
     );
   if (!args[0] && !commandName) return;
-  if (!command) return;
+  if (!command)
+    return message.channel.send(
+      `Try doing ${prefix}help to see what my commands are!`
+    );
 
   if (command.guildOnly && message.channel.type !== "text") {
     const embed = new MessageEmbed()

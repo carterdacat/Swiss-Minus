@@ -1,6 +1,7 @@
 import SwissClient from "../SwissClient";
 import { Message, MessageEmbed } from "discord.js";
 import { log_yellow, swiss_blue } from "../config";
+import { getRandom } from "../utils";
 
 export let name = "rockpaperscissors";
 export let description = "Play rock paper scissors with this bot";
@@ -11,9 +12,6 @@ const choices = ["Rock", "Paper", "Scissors"];
 const rock = ["rock", "r"];
 const paper = ["paper", "p"];
 const scissors = ["scissors", "s"];
-function getRandom(array: Array<any>) {
-  return array[Math.floor(Math.random() * array.length)];
-}
 
 export async function execute(
   client: SwissClient,

@@ -1,12 +1,7 @@
 import SwissClient from "../SwissClient";
-import {
-  Message,
-  CollectorFilter,
-  MessageCollector,
-  MessageEmbed,
-  TextChannel
-} from "discord.js";
+import { Message, MessageEmbed, TextChannel } from "discord.js";
 import { swiss_blue } from "../config";
+import { awaitMessage, arrayJoin } from "../utils";
 
 export let name = "poll";
 export let description = "Creates a poll in whatever channel you would like to";
@@ -26,29 +21,7 @@ const adjNumbers = [
   "ninth",
   "tenth"
 ];
-const abortKeywords = ["cancel", "abort", "go around"];
-async function awaitMessage(message: Message, filter: CollectorFilter) {
-  let promise = new Promise((resolve, reject) => {
-    message.channel.startTyping(60000);
-    let x = new MessageCollector(message.channel, filter, { time: 60000 });
-    x.on("collect", msg => {
-      resolve(msg);
-    });
-    x.on("end", a => {
-      reject(a);
-    });
-  });
-  return await promise
-    .then(function(msg: Message) {
-      message.channel.stopTyping(true);
-      return msg;
-    })
-    .catch(function(b) {
-      message.channel.stopTyping(true);
-      message.channel.send("Oops, your time ran out!");
-      return null;
-    });
-}
+const abortKeywords = ["cancel", "abort", "go around", "eject"];
 
 export async function execute(
   client: SwissClient,
@@ -58,8 +31,11 @@ export async function execute(
   // Input the channel
   const channelEmbed = new MessageEmbed()
     .setDescription(
-      `What channel should the poll be in? You can cancel the poll by saying \`${abortKeywords.join(
-        "`, `"
+      `What channel should the poll be in? You can cancel the poll by saying \`${arrayJoin(
+        abortKeywords,
+        "`, `",
+        "`",
+        "or"
       )}\``
     )
     .setColor(swiss_blue)
@@ -83,8 +59,11 @@ export async function execute(
     .setDescription(
       `Poll will be in <#${
         channel.id
-      }>, what should the question be? You can cancel the poll by saying \`${abortKeywords.join(
-        "`, `"
+      }>, what should the question be? You can cancel the poll by saying \`${arrayJoin(
+        abortKeywords,
+        "`, `",
+        "`",
+        "or"
       )}\``
     )
     .setColor(swiss_blue)
@@ -105,8 +84,11 @@ export async function execute(
   // Input the amount of possible options
   const amountEmbed = new MessageEmbed()
     .setDescription(
-      `Question is \`${question}\`, how many options should the poll have? You can cancel the poll by saying \`${abortKeywords.join(
-        "`, `"
+      `Question is \`${question}\`, how many options should the poll have? You can cancel the poll by saying \`${arrayJoin(
+        abortKeywords,
+        "`, `",
+        "`",
+        "or"
       )}\``
     )
     .setColor(swiss_blue)
@@ -140,8 +122,11 @@ export async function execute(
           options[ctr - 2]
         }\`. What should the ${
           adjNumbers[ctr]
-        } be? You can cancel the poll by saying \`${abortKeywords.join(
-          "`, `"
+        } be? You can cancel the poll by saying \`${arrayJoin(
+          abortKeywords,
+          "`, `",
+          "`",
+          "or"
         )}\``
       )
       .setColor(swiss_blue)
@@ -151,8 +136,11 @@ export async function execute(
       optionEmbed.setDescription(
         `Number of options is ${amount}, what should the ${
           adjNumbers[ctr]
-        } be? You can cancel the poll by saying \`${abortKeywords.join(
-          "`, `"
+        } be? You can cancel the poll by saying \`${arrayJoin(
+          abortKeywords,
+          "`, `",
+          "`",
+          "or"
         )}\``
       );
     }

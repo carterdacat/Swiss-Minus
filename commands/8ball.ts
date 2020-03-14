@@ -1,13 +1,14 @@
 import SwissClient from "../SwissClient";
 import { Message, MessageEmbed } from "discord.js";
 import { swiss_blue } from "../config";
+import { getRandom } from "../utils";
 
 export let name = "8ball";
 export let description = "Fortune Teller.";
 export let cooldown = 5;
 export let aliases = ["8ball", "eightball", "future"];
 
-const choices = [
+const fortunes = [
   "It is certain",
   "It is decidedly so",
   "Without a doubt",
@@ -35,11 +36,10 @@ export async function execute(
   message: Message,
   _args: string[]
 ) {
-  const randomOption = choices[Math.floor(Math.random() * choices.length)];
   const embed = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL())
     .setTitle("Your fortune is:")
-    .setDescription(randomOption)
+    .setDescription(getRandom(fortunes))
     .setColor(swiss_blue)
     .setFooter(client.version)
     .setTimestamp();

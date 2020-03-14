@@ -1,7 +1,5 @@
 import SwissClient from "../SwissClient";
 import { Message, MessageEmbed, TextChannel, GuildMember } from "discord.js";
-
-import { version } from "../package.json";
 import { Client as PgClient } from "pg";
 import { swiss_blue, error_red, log_yellow } from "../config";
 
@@ -44,7 +42,7 @@ export async function execute(
     let embed = new MessageEmbed()
       .setColor(error_red)
       .setDescription("Hey! Thats not a chest type.")
-      .setFooter(version)
+      .setFooter(client.version)
       .setTimestamp();
     return message.channel.send(embed);
   }
@@ -72,13 +70,13 @@ export async function execute(
   let embed1 = new MessageEmbed()
     .setDescription("I added the crate!")
     .setColor(swiss_blue)
-    .setFooter(version)
+    .setFooter(client.version)
     .setTimestamp();
   message.channel.send(embed1);
   let embed2 = new MessageEmbed()
     .setColor(swiss_blue)
     .setDescription(`Hey, <@${message.author.id}> gave you a ${type} crate!`)
-    .setFooter(version)
+    .setFooter(client.version)
     .setTimestamp();
   whoisUser.send(embed2);
   let log = new MessageEmbed()
@@ -87,7 +85,7 @@ export async function execute(
     .setDescription(
       `<@${message.author.id}> gave <@${whoisUser.id}> a ${type} chest`
     )
-    .setFooter(version)
+    .setFooter(client.version)
     .setTimestamp();
   const log1 = client.channels.cache.get("674624372170031145") as TextChannel;
   const log2 = client.channels.cache.get("592805129003073570") as TextChannel;
