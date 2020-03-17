@@ -2,6 +2,7 @@ import SwissClient from "../../SwissClient";
 import { Message } from "discord.js";
 import { join } from "path";
 import { writeFileSync } from "fs";
+import { arrayJoin } from "../../utils";
 
 export let name = "badword";
 export let description = "Add a badword into the list";
@@ -24,9 +25,10 @@ export async function execute(
   regexps.forEach(regexp => {
     words = words.map(word => word.replace(regexp, " "));
   });
+  words = words.filter(word => !badwords.includes(word));
   badwords = [...badwords, ...words];
   writeFileSync(filepath, JSON.stringify(badwords, null, 4));
   return message.channel.send(
-    `\`${args.join(" ")}\` has been added to the badwords list!`
+    `\`${args.join("`, `")}\` has been added to the badwords list!`
   );
 }

@@ -4,7 +4,8 @@ import {
   Message,
   GuildMember,
   MessageEmbed,
-  ReactionCollector
+  ReactionCollector,
+  MessageReaction
 } from "discord.js";
 import { awaitMessage, getRandom } from "../../utils";
 
@@ -116,7 +117,6 @@ export async function execute(
     gameMsg.reactions.cache.find(r => r.emoji.name === emoji).remove();
     playable[reactions.indexOf(emoji)] = null;
     const winner = findWinner();
-    console.log(winner);
     if (playable.every(p => p === null)) {
       stop = true;
       message.channel.stopTyping(true);
@@ -173,11 +173,11 @@ export async function execute(
     }
     const collector = new ReactionCollector(
       gameMsg,
-      (r, u) =>
+      (r: MessageReaction, u) =>
         playable
           .map((e, index) => (e ? reactions[index - 1] : null))
           .filter(e => e !== null)
-          .includes(r) && u.id === currentPlayer.id,
+          .includes(r.emoji.name) && u.id === currentPlayer.id,
       {
         time: 60000
       }
