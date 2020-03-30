@@ -19,7 +19,7 @@ const quotes = [
   "Democrat or Republican",
   "What have you been up to recently?",
   "Whats your favourite plane?",
-  "SwissBot or SwissPlus?",
+  "SwissBot or SwissMinus?",
   "Windows or Apple?"
 ];
 

@@ -8,6 +8,7 @@ export let name = "news";
 export let description = "Get the latest news headlines from flightglobal.com";
 export let aliases = ["whatsup"];
 export let cooldown = 15;
+export let canBeOff = true;
 
 const url = "https://flightglobal.com"; // This must not be changed
 

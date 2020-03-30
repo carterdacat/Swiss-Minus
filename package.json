@@ -1,22 +1,20 @@
 {
-  "name": "swiss-plus",
-  "version": "3.4.0",
+  "name": "swiss-minus",
+  "version": "3.8.1",
   "main": "src/index.ts",
   "engines": {
     "node": "12.11.1",
     "npm": "6.13.6"
   },
   "scripts": {
-    "start:bot": "node ./dist/index.js",
-    "start:webserver": "node ./dist/webserver.js",
+    "start": "node ./dist/index.js",
     "build": "rm -rf dist/ && tsc",
-    "dev:bot": "ts-node-dev ./src/index.ts",
-    "dev:webserver": "ts-node-dev ./src/webserver.ts"
+    "dev": "ts-node-dev ./src/index.ts"
   },
   "heroku-run-build-script": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carterdacat/Swiss-Plus.git"
+    "url": "git+https://github.com/carterdacat/Swiss-Minus.git"
   },
   "keywords": [
     "heroku",
@@ -24,20 +22,22 @@
   ],
   "author": "carterdacat",
   "bugs": {
-    "url": "https://github.com/carterdacat/Swiss-Plus"
+    "url": "https://github.com/carterdacat/Swiss-Minus"
   },
-  "homepage": "https://github.com/carterdacat/Swiss-Plus",
+  "homepage": "https://github.com/carterdacat/Swiss-Minus",
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
     "axios": "^0.19.2",
     "better-sqlite3": "^5.4.3",
     "canvas": "^2.6.1",
     "cheerio": "^1.0.0-rc.3",
+    "discord-rpc": "^3.1.0",
     "discord.js": "^12.0.2",
     "dns-socket": "^4.2.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "ffmpeg-static": "^4.0.1",
     "github-api": "^3.3.0",
     "google-auth-library": "^5.10.1",
@@ -54,19 +54,18 @@
     "translate": "^1.1.2",
     "urban-dictionary": "^2.2.1",
     "youtube-node": "^1.3.3",
-    "ytdl-core": "^2.0.0"
+    "ytdl-core": "^2.0.1"
   },
   "devDependencies": {
-    "@types/cheerio": "^0.22.16",
-    "@types/node": "^13.9.1",
+    "@types/cheerio": "^0.22.17",
+    "@types/node": "^13.9.5",
     "@types/pg": "^7.14.3",
-    "@types/puppeteer": "^2.0.1",
     "cross-env": "^6.0.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
-    "ts-node": "^8.6.2",
+    "ts-node": "^8.8.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   },

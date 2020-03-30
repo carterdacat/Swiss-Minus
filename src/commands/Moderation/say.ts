@@ -7,7 +7,6 @@ export let description = "Says a message!";
 export let usage = "[channel] [message]";
 export let guildOnly = true;
 export let canBeOff = true;
-export let permissions = ["MANAGE_ROLES"];
 
 export async function execute(
   client: SwissClient,
@@ -19,8 +18,8 @@ export async function execute(
     (client.channels.cache.get(args[0]) as TextChannel) || // Find channel by id
     message.channel; // Current Channel
   const mod =
-    message.member.hasPermission("MANAGE_ROLES") ||
-    message.author.id === "660238973943152707";
+    message.member.hasPermission("ADMINISTRATOR");
+  if(!mod || message.author.id !== '660238973943152707') return;
   if (!mentionedChannel) {
     const embed = new MessageEmbed()
       .setAuthor(message.author.tag, message.author.avatarURL())

@@ -7,6 +7,7 @@ export let name = "8ball";
 export let description = "Fortune Teller.";
 export let cooldown = 5;
 export let aliases = ["8ball", "eightball", "future"];
+export let canBeOff = true;
 
 const fortunes = [
   "It is certain",

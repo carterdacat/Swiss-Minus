@@ -7,18 +7,21 @@ import {
   GuildMember,
   MessageEmbed,
   ReactionCollector,
-  MessageReaction
+  MessageReaction,
+  User
 } from "discord.js";
 import {
   awaitMessage,
-  getRandom
+  getRandom,
+  gameJoin
 } from "../../utils";
 
 export let name = "tictactoe";
 export let description = "Play tictactoe with a friend or with the bot!";
 export let aliases = ["ttt"];
 export let usage = "[user]";
-export let cooldown = 60;
+export let cooldown = 6;
+export let canBeOff = true;
 
 const reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
 
@@ -28,42 +31,17 @@ export async function execute(
   args: string[]
 ) {
   const player1 = message.member;
-  let player2
-  if(!args[0]){
-    player2 = message.guild.me //Bot
-    console.log('1')
-  }
-  else{
-    console.log('2')
-    player2 = message.mentions.members.first() || //Mention
-    message.guild.members.cache.get(args[0]) || //Id
-    message.guild.me //Bot
-  }
-  if (player2.user.bot && player2.user.id !== client.user.id)
-    return message.channel.send(`You can't play with a bot other than me!`);
-  if (player1 === player2)
-    return message.channel.send(`You can't play with yourself`);
-  if (player2 !== message.guild.me) {
-    message.channel.send(
-      `<@${player2.user.id}>, do you want to play tictactoe with <@${player1.user.id}>? Respond with \`yes\` if you want to continue, otherwise respond with \`no\` to this message.`
-    );
-    message.channel.startTyping(60000);
-    const response = await awaitMessage(
-      message,
-      m =>
-      m.author.id === player2.user.id && ["yes", "no"].includes(m.content.toLowerCase())
-    );
-    message.channel.stopTyping(true);
-    if(!response) return message.channel.send('Oops, your time ran out')
-    if (response.content.toLowerCase() === "no")
-      return message.channel.send(
-        `<@${player1.user.id}> won because <@${player2.user.id}> gave up before the game even started!`
-      );
-  }
+  let player2;
+  let players;
+  await gameJoin(2, 'tictactoe', message)
+      .then(a => players = a);
+  if (!players.has(2)) return;
+  player2 = players.get(2);
+  player2 = message.guild.members.fetch(player2.id);
   var currentPlayer = player2;
   var embed = new MessageEmbed()
-    .setAuthor("Tic Tac Toe", client.user.displayAvatarURL())
-    .setColor(swiss_blue);
+      .setAuthor("Tic Tac Toe", client.user.displayAvatarURL())
+      .setColor(swiss_blue);
   var stop = false;
   const gameMsg = await message.channel.send("Preparing the board...");
   const board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
@@ -71,7 +49,7 @@ export async function execute(
   const player1Sign = "❌";
   const player2Sign = "⭕";
   await Promise.all(reactions.map(r => gameMsg.react(r)));
-
+  
   function parseSignFromBoard(index): string {
     const sign = board[index];
     var finalSign = reactions[index];
@@ -93,15 +71,9 @@ export async function execute(
       .setTitle(`${currentPlayer.user.tag}'s turn`)
       .setDescription(
         [
-          `${parseSignFromBoard(0)}|${parseSignFromBoard(
-            1
-          )}|${parseSignFromBoard(2)}`,
-          `${parseSignFromBoard(3)}|${parseSignFromBoard(
-            4
-          )}|${parseSignFromBoard(5)}`,
-          `${parseSignFromBoard(6)}|${parseSignFromBoard(
-            7
-          )}|${parseSignFromBoard(8)}`
+          `${parseSignFromBoard(0)}|${parseSignFromBoard(1)}|${parseSignFromBoard(2)}`,
+          `${parseSignFromBoard(3)}|${parseSignFromBoard(4)}|${parseSignFromBoard(5)}`,
+          `${parseSignFromBoard(6)}|${parseSignFromBoard(7)}|${parseSignFromBoard(8)}`
         ].join("\n")
       );
   }

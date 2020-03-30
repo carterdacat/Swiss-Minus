@@ -7,6 +7,7 @@ export let name = "slot";
 export let description = "Play with a slot machine!";
 export let aliases = ["slotmachine", "luck"];
 export let cooldown = 5;
+export let canBeOff = true;
 
 const emojis = ["✈️", "🛩️", "🚀", "🦟", "🚁", "🏔️"]; // The more emojis the harder for one win
 const winner = [

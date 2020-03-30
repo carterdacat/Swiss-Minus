@@ -1,8 +1,8 @@
-import { Client, Message } from "discord.js";
+import {Client, Message} from "discord.js";
 
 const rules = [
   "You must be over the age of 13. If we suspect a user being under the age of 13, we may enforce appropriate action to make sure all users are above the age of 13. You may continue to stay in this server with parental permission.",
-  "Inappropriate discord usernames or profile pictures are not allowed, you will be given a formal warning to change this and may lead to further action being taken upon you.",
+  "Inappropriate discord username or profile pictures are not allowed, you will be given a formal warning to change this and may lead to further action being taken upon you.",
   "Moderators reserve the right to change your server nickname if it is found to be violating the rules. This will be followed by a formal warning as stated above.",
   "Please withhold only a single account within the server. Prior permission will be required from the staff team if you wish to bring in another account for any legit reason.",
   "With custom statuses, you may not have any inappropriate/racist/offensive content in anyway. Self advertising is also prohibited and action may be taken if these rules are broken.",
@@ -45,20 +45,22 @@ const wordmap = {
 export let name = "rule";
 export let description = "Gets a rule";
 export let cooldown = 0;
+export let canBeOff = true;
 
 export async function execute(
-  client: Client,
-  message: Message,
-  args: string[]
+    client: Client,
+    message: Message,
+    args: string[]
 ) {
   let pete = client.users.cache.get("660238973943152707");
   if (!args[0]) return;
+  if (args[0] === '16a') return await message.channel.send('Politics are not tolerated; this is an aviation server.');
   if (rules[parseInt(args[0]) - 1] !== undefined)
-    message.channel.send(rules[parseInt(args[0]) - 1]);
+    await message.channel.send(rules[parseInt(args[0]) - 1]);
   if (rules[wordmap[args[0]] - 1] !== undefined)
-    message.channel.send(rules[wordmap[args[0].toLowerCase()] - 1]);
+    await message.channel.send(rules[wordmap[args[0].toLowerCase()] - 1]);
   if (parseInt(args[0]) > 36)
-    `Swiss Plus is the best bot, no questions. If you do for some absurd reason have a question, dm **Non-Ping(${
-      (await pete).tag
+    `Swiss Minus is the best bot, no questions. If you do for some absurd reason have a question, dm **Non-Ping(${
+        (await pete).tag
     })**`;
 }

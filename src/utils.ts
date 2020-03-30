@@ -1,6 +1,14 @@
-import { Message, CollectorFilter, MessageCollector } from "discord.js";
+import {
+  Message,
+  CollectorFilter,
+  MessageCollector,
+  ReactionCollector,
+  ReactionEmoji,
+  MessageReaction,
+  User
+} from "discord.js";
 
-export function getRandom(array: Array<any>) {
+export function getRandom(array: Array < any > ) {
   return array[Math.floor(Math.random() * array.length)];
 }
 export function convertMs(ms, delim = ":") {
@@ -25,9 +33,14 @@ export function convertBytes(bytes) {
     i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
-export async function awaitMessage(message: Message, filter: CollectorFilter) {
+export async function awaitMessage(
+  message: Message,
+  filter: CollectorFilter
+) {
   let promise = new Promise((resolve, reject) => {
-    let x = new MessageCollector(message.channel, filter, { time: 60000 });
+    let x = new MessageCollector(message.channel, filter, {
+      time: 60000
+    });
     x.on("collect", msg => {
       resolve(msg);
     });
@@ -36,16 +49,16 @@ export async function awaitMessage(message: Message, filter: CollectorFilter) {
     });
   });
   return await promise
-    .then(function(msg: Message) {
+    .then(function (msg: Message) {
       return msg;
     })
-    .catch(function(b) {
+    .catch(function (b) {
       message.channel.send("Oops, your time ran out!");
       return null;
     });
 }
 export function arrayJoin(
-  array: Array<any>,
+  array: Array < any > ,
   separator: string,
   specialChar: string,
   lastKeyword: string
@@ -55,4 +68,55 @@ export function arrayJoin(
     .join(separator)}${specialChar} ${lastKeyword} ${specialChar}${
     array[array.length - 1]
   }`;
+}
+export async function gameJoin(
+  playerCount: number,
+  game: String,
+  message: Message
+) {
+  let neededPlayers = playerCount - 1;
+  let firstText = `React to this message to play ${game}!`;
+  let secondMsg = `\n \n \n ${message.author.tag}`;
+  let thirdMsg = '';
+  let order = 1;
+  let msg: Message;
+  for (let a = 0; neededPlayers > a; a++) {
+    thirdMsg = thirdMsg + '\n Empty'
+  }
+  await message.channel.send(firstText + secondMsg + thirdMsg)
+      .then(
+          (mesg) => {
+            msg = mesg
+          }
+      );
+  let players = new Map([
+    [order, message.author]
+  ]);
+  order++;
+  msg.react('🚪');
+  let rcollector = new Promise((resolve, reject) => {
+    let reactCollector = new ReactionCollector(msg, (a: MessageReaction, b: User) => 1 === 1 && !b.bot && b !== message.author, {
+      maxUsers: neededPlayers,
+      time: 10000
+    });
+    reactCollector.on('collect', (reaction: MessageReaction, user: User) => {
+      let c = msg.content;
+      let d = c.replace('Empty', user.tag);
+      players.set(order, user);
+      order++;
+      msg.edit(d)
+    });
+    reactCollector.on('end', a => {
+      msg.delete();
+      resolve()
+    })
+  });
+  await rcollector
+      .then(a => {
+        return players
+      })
+      .catch(a => {
+        return players
+      });
+  return players
 }

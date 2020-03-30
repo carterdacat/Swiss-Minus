@@ -9,10 +9,5 @@ export async function execute(
   message: Message,
   args: string[]
 ) {
-  message.channel.send(
-    new MessageAttachment(
-      "https://cdn.discordapp.com/attachments/592768337407115264/688354600973238302/video0.mov",
-      "video0.mov"
-    )
-  );
+  await message.channel.send('Congrats <@390939447509778432>');
 }

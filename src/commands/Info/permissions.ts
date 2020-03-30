@@ -16,15 +16,12 @@ export async function execute(
   args: string[]
 ) {
   const permMentioned =
-    message.mentions.members.first() || // First mentioned user
-    (message.guild.members.cache.get(args[0]) as GuildMember) || // User ID
-    (message.guild.members.cache.find(
-      m => m.user.username === args[0]
-    ) as GuildMember) || // Username
-    (message.guild.members.cache.find(
-      m => m.nickname === args[0]
-    ) as GuildMember) || // Nickname
-    message.member; // Member who sent the message
+  message.mentions.members.first() || // First mention
+  (message.guild.members.cache.get(args[0]) as GuildMember) || // User ID
+  (message.guild.members.cache.find(
+    m => m.user.username === args[0]
+  ) as GuildMember) || // Username
+  message.member; // Member who sent the message
   const permEmbed = new MessageEmbed();
   permEmbed
     .setAuthor(

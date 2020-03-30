@@ -34,12 +34,12 @@ export async function execute(
   ]);
   if (id.rowCount === 0)
     await db.query(
-      "INSERT INTO cards (id, common, rare, jumbo, ultra, ledgendary) VALUES($1, 0, 0, 0, 0, 0)",
-      [message.author.id]
+        "INSERT INTO cards (id, common, rare, jumbo, ultra, ledgendary) VALUES($1, 0, 0, 0, 0, 0)",
+        [message.author.id]
     );
-  if ([2, 4, 6, 8, 10].includes(2) /* ??? */) {
+  if ([2, 4, 6, 8, 10].includes(2) /* ??? */ /* testing something lmao */) {
     return message.channel.send(
-      "Hey! You messed up the arugments. Please do `!help trade` to see the usage"
+        "Hey! You messed up the arugments. Please do `!help trade` to see the usage"
     );
   }
 }

@@ -7,6 +7,7 @@ export let name = "randomfact";
 export let description = "Gives you a random fact";
 export let cooldown = 5;
 export let aliases = ["randomfact", "fact", "rf"];
+export let canBeOff = true;
 
     const factArray = [
         "Actor Michael Keaton got his start in show business as a production assistant on Mister Rogers' Neighborhood. He helped with the puppets and ran the trolley.",
@@ -50,5 +51,5 @@ export let aliases = ["randomfact", "fact", "rf"];
           .setColor(swiss_blue)
           .setFooter(client.version)
           .setTimestamp();
-        message.channel.send(embed);
+        await message.channel.send(embed);
       }

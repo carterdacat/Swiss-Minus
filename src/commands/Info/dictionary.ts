@@ -8,6 +8,7 @@ export let name = "dictionary";
 export let description = "Search for the meaning of words";
 export let aliases = ["urban", "whatdoesthismean"];
 export let cooldown = 0;
+export let canBeOff = true;
 
 export async function execute(
   client: SwissClient,

@@ -6,6 +6,7 @@ export let name = "ping";
 export let description = "Gets the bot's latency";
 export let aliases = ["pong"];
 export let cooldown = 0;
+export let canBeOff = true;
 
 export async function execute(client: SwissClient, message: Message) {
   const m = await message.channel.send("Pinging...");

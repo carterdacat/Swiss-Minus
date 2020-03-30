@@ -1,15 +1,17 @@
 <head>
-	<title><%- title %> | Swiss Plus</title>
+	<title><%- title %> | Swiss Minus</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- FontAwesome CDN -->
 	<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
 	<!-- Custom CSS -->
-	<link rel="stylesheet" href="styles/global.css">
+	<% css.forEach(css => { %>
+	<link rel="stylesheet" href="styles/<%- css %>.css">
+	<% }); %>
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="images/swiss-plus.png" type="image/x-icon">
 
 	<!-- Apple Logo for iphones-->
-	<link rel="apple-touch-icon" href="webpage/public/images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 </head>
