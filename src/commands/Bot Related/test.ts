@@ -22,5 +22,5 @@ export async function execute(
     message: Message,
     args: string[]
 ) {
-message.channel.send('This is a test command for testing')
+message.channel.send('This is a test command for testing!')
 }
