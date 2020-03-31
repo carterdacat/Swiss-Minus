@@ -23,22 +23,16 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="dddd18c8-8398-4fb0-b90b-cc1f9decf273">
-        <schema name="information_schema" object-types="view, table" />
-        <schema name="pg_catalog" object-types="function" />
-        <schema name="public" object-types="dataset trigger, index, sequence, function, constraint, view, column, table" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dddd18c8-8398-4fb0-b90b-cc1f9decf273">
-      <console name="Swiss Plus DB" type="STANDARD" schema="public" session="Main"><![CDATA[heroku pg:psql -a swiss-plus-js]]></console>
+      <console name="Swiss Plus DB" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="dddd18c8-8398-4fb0-b90b-cc1f9decf273" object-ref="schemas/public/tables/settings" />
+      <object connection-id="3c41da40-7fbf-417f-b982-53eb4311d559" object-ref="schemas/public/tables/settings" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
@@ -69,9 +63,7 @@
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces>
-      <mapping database-type="POSTGRES" interface-id="DEFAULT" />
-    </recently-used-interfaces>
+    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>

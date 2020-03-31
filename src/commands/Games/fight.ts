@@ -11,15 +11,12 @@ import {
     User
 } from "discord.js";
 import {
-    awaitMessage,
-    getRandom,
     gameJoin
 } from "../../utils";
 
 export let name = "fight";
 export let description = "Fight another user!";
 export let aliases = ["f"];
-export let usage = "<user>";
 export let cooldown = 5;
 export let canBeOff = true;
 
@@ -30,7 +27,7 @@ export async function execute(
 ) {
     let user1 = message.author;
     let user2;
-    await gameJoin(2, 'fight', message)
+    await gameJoin(2, 'fight', message, 15000)
         .then(a => user2 = a);
     if (!user2.has(2)) return message.channel.send('Oops, you ran out of time!');
     user2 = user2.get(2);
@@ -158,7 +155,6 @@ export async function execute(
                 res()
             }
             let action = Math.floor(Math.random() * 10);
-            console.log(action);
             if (action > 5) {
                 damage();
                 if (activeP.pson === pt1) {
@@ -196,8 +192,7 @@ export async function execute(
                 return fightMessage.edit(
                     embed
                 )
-            }
-            else if(action === 8 || action === 9) {
+            } else if (action === 8) {
                 steal();
                 if (activeP.pson === pt1) {
                     p2h.heth = (p2h.health - change.change);
@@ -223,12 +218,12 @@ export async function execute(
         }, 2500)
     });
     let deadP;
-    if (p1h.health < 1) deadP = pt1;
-    else deadP = pt2;
     await promise
         .then(a => {
             fightMessage.delete().then(
                 a => {
+                    if (p1h.health < 1) deadP = pt1;
+                    else if (p2h.health < 1) deadP = pt2;
                     message.channel.send(`${deadP} was send the the hospital. GG`)
                 }
             )
