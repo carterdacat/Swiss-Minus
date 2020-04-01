@@ -26,5 +26,5 @@ export async function execute(
     let newMessage;
     await message.channel.send(embed)
         .then(a => newMessage = a);
-    newMessage.delete({timeout: 10000})
+    newMessage.delete({timeout: 20000})
 }
