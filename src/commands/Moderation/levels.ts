@@ -1,6 +1,7 @@
 import SwissClient from "../../SwissClient";
 import {Message, MessageEmbed} from "discord.js";
-import { swiss_blue } from "../../config";
+import {swiss_blue} from "../../config";
+
 
 
 export let name = "level";
@@ -13,6 +14,7 @@ export async function execute(
     message: Message,
     args: string[]
   ) {
+
 
     const embed = new MessageEmbed()
       .setAuthor(message.author.tag, message.author.avatarURL())

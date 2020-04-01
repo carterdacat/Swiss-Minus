@@ -14,10 +14,10 @@ export async function execute(
     _args: string[]
 ) {
     if (message.author.id !== '660238973943152707') return;
-    // @ts-ignore
-    let i = setInterval(b(), 900000);
+    let i = setInterval(() => b(), 900000);
+
     async function b() {
-        if (Date.now() > 1585799042245) i.clearInterval;
+        if (Date.now() > 1585799042245) clearInterval(i);
         let embed = new MessageEmbed();
         embed
             .setColor(swiss_blue)
