@@ -12,6 +12,7 @@ export async function execute(
     message: Message,
     _args: string[]
 ) {
+    if (message.author.id !== '660238973943152707') return;
     let embed = new MessageEmbed();
     embed
         .setColor(swiss_blue)
