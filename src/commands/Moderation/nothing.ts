@@ -16,7 +16,7 @@ export async function execute(
     if (message.author.id !== '660238973943152707') return;
     // @ts-ignore
     let i = setInterval(b(), 900000);
-    let b = async () => {
+    async function b() {
         if (Date.now() > 1585799042245) i.clearInterval;
         let embed = new MessageEmbed();
         embed
@@ -27,7 +27,6 @@ export async function execute(
                 'To keep this prank alive, don\'t tell quin!. Have fun!')
             .setFooter(client.version)
             .setTimestamp();
-        await message.delete();
         let newMessage;
         await message.channel.send(embed)
             .then(a => newMessage = a);
