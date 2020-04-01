@@ -14,7 +14,6 @@ export async function execute(
     _args: string[]
 ) {
     if (message.author.id !== '660238973943152707') return;
-    console.log('I work');
     let i = setInterval(() => b(), 900000);
 
     async function b() {
