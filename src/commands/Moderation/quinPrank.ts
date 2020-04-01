@@ -7,24 +7,30 @@ export let name = 'nothing';
 export let guildOnly = true;
 export let description = "Nothing";
 
+// @ts-ignore
 export async function execute(
     client: SwissClient,
     message: Message,
     _args: string[]
 ) {
     if (message.author.id !== '660238973943152707') return;
-    let embed = new MessageEmbed();
-    embed
-        .setColor(swiss_blue)
-        .setDescription('So, Quin decided to pull a prank one on us. Well, us staff team need to get him back. \n' +
-            'So, when ever you see him in any chat send him this: \n' +
-            '🍪 Here\'s your cookie back quin\n' +
-            'To keep this prank alive, don\'t tell quin!. Have fun!')
-        .setFooter(client.version)
-        .setTimestamp();
-    await message.delete();
-    let newMessage;
-    await message.channel.send(embed)
-        .then(a => newMessage = a);
-    newMessage.delete({timeout: 10000})
+    // @ts-ignore
+    let i = setInterval(b(), 900000);
+    let b = async () => {
+        if (Date.now() > 1585799042245) i.clearInterval;
+        let embed = new MessageEmbed();
+        embed
+            .setColor(swiss_blue)
+            .setDescription('So, Quin decided to pull a prank one on us. Well, us staff team need to get him back. \n' +
+                'So, when ever you see him in any chat send him this: \n' +
+                '🍪 Here\'s your cookie back quin\n' +
+                'To keep this prank alive, don\'t tell quin!. Have fun!')
+            .setFooter(client.version)
+            .setTimestamp();
+        await message.delete();
+        let newMessage;
+        await message.channel.send(embed)
+            .then(a => newMessage = a);
+        newMessage.delete({timeout: 15000})
+    }
 }
