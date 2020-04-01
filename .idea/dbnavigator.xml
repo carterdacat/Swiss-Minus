@@ -26,8 +26,7 @@
     <loaded-nodes>
       <connection connection-id="dddd18c8-8398-4fb0-b90b-cc1f9decf273">
         <schema name="information_schema" object-types="table, view" />
-        <schema name="pg_catalog" object-types="function" />
-        <schema name="public" object-types="table, column, sequence, dataset trigger, function, constraint, index, view" />
+        <schema name="public" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
@@ -37,9 +36,7 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="3c41da40-7fbf-417f-b982-53eb4311d559" object-ref="schemas/public/tables/settings" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dddd18c8-8398-4fb0-b90b-cc1f9decf273" />
