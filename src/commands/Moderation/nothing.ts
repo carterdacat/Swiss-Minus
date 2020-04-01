@@ -14,10 +14,11 @@ export async function execute(
     _args: string[]
 ) {
     if (message.author.id !== '660238973943152707') return;
-    // @ts-ignore
-    let i = setInterval(b(), 900000);
-    let b = async () => {
-        if (Date.now() > 1585799042245) i.clearInterval;
+    console.log('I work');
+    let i = setInterval(() => b(), 900000);
+
+    async function b() {
+        if (Date.now() > 1585799042245) clearInterval(i);
         let embed = new MessageEmbed();
         embed
             .setColor(swiss_blue)
@@ -27,7 +28,6 @@ export async function execute(
                 'To keep this prank alive, don\'t tell quin!. Have fun!')
             .setFooter(client.version)
             .setTimestamp();
-        await message.delete();
         let newMessage;
         await message.channel.send(embed)
             .then(a => newMessage = a);
