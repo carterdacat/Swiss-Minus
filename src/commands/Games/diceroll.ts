@@ -6,7 +6,7 @@ import { getRandom } from "../../utils";
 export let name = "diceroll";
 export let description = "Game: Dice roll, returns a number between 1 and 6";
 export let cooldown = 5;
-export let aliases = ["diceroll", "dice", "roll"];
+export let aliases = ["diceroll", "dice", "roll", "rolldice"];
 
 const diceArray = ["1", "2", "3", "4", "5", "6"];
 
