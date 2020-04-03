@@ -25,21 +25,18 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="dddd18c8-8398-4fb0-b90b-cc1f9decf273">
-        <schema name="information_schema" object-types="view, table" />
-        <schema name="pg_catalog" object-types="function" />
-        <schema name="public" object-types="dataset trigger, index, sequence, function, constraint, view, column, table" />
+        <schema name="information_schema" object-types="table, view" />
+        <schema name="public" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dddd18c8-8398-4fb0-b90b-cc1f9decf273">
-      <console name="Swiss Plus DB" type="STANDARD" schema="public" session="Main"><![CDATA[heroku pg:psql -a swiss-plus-js]]></console>
+      <console name="Swiss Plus DB" type="STANDARD" schema="public" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="dddd18c8-8398-4fb0-b90b-cc1f9decf273" object-ref="schemas/public/tables/settings" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dddd18c8-8398-4fb0-b90b-cc1f9decf273" />

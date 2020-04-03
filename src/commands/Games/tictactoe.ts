@@ -33,7 +33,7 @@ export async function execute(
   const player1 = message.member;
   let player2;
   let players;
-  await gameJoin(2, 'tictactoe', message)
+  await gameJoin(2, 'tictactoe', message, 10000)
       .then(a => players = a);
   if (!players.has(2)) return;
   player2 = players.get(2);

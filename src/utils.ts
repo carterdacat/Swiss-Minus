@@ -70,9 +70,10 @@ export function arrayJoin(
   }`;
 }
 export async function gameJoin(
-  playerCount: number,
-  game: String,
-  message: Message
+    playerCount: number,
+    game: String,
+    message: Message,
+    timeout: number
 ) {
   let neededPlayers = playerCount - 1;
   let firstText = `React to this message to play ${game}!`;
@@ -93,11 +94,11 @@ export async function gameJoin(
     [order, message.author]
   ]);
   order++;
-  msg.react('🚪');
+  await msg.react('🚪');
   let rcollector = new Promise((resolve, reject) => {
     let reactCollector = new ReactionCollector(msg, (a: MessageReaction, b: User) => 1 === 1 && !b.bot && b !== message.author, {
       maxUsers: neededPlayers,
-      time: 10000
+      time: timeout
     });
     reactCollector.on('collect', (reaction: MessageReaction, user: User) => {
       let c = msg.content;
