@@ -18,7 +18,6 @@ export async function execute(
       (client.channels.cache.get(args[0]) as TextChannel) || // Find channel by id
       message.channel; // Current Channel
   const usable =
-      message.member.hasPermission("ADMINISTRATOR") ||
       message.author.id === '660238973943152707';
   if (!usable) return;
   if (!mentionedChannel) {
