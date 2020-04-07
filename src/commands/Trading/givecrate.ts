@@ -7,7 +7,7 @@ export const name = "givecrate";
 export const description = "Gives a user a crate";
 export const usage = `[user] [chest type] <reason>`;
 export const guildOnly = true;
-export const permissions = ["MANAGE_ROLES"];
+export const permissions = ["MANAGE_MESSAGES"];
 
 export async function execute(
   client: SwissClient,
