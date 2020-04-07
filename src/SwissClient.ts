@@ -60,7 +60,7 @@ class SwissClient extends Client {
     if (this.dev) {
       console.log(`Loading in command ${command.name} of category ${category}`);
     }
-    if ((command.devOnly || false) && !this.dev) return;
+    if (command.devOnly && !this.dev) return;
     command.category = category;
     this.commands.set(command.name, command);
   }

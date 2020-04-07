@@ -14,20 +14,21 @@ export async function execute(
   args: string[]
 ) {
   const mentionedChannel =
-    message.mentions.channels.first() || // Mentioned channel
-    (client.channels.cache.get(args[0]) as TextChannel) || // Find channel by id
-    message.channel; // Current Channel
-  const mod =
-    message.member.hasPermission("ADMINISTRATOR");
-  if(!mod || message.author.id !== '660238973943152707') return;
+      message.mentions.channels.first() || // Mentioned channel
+      (client.channels.cache.get(args[0]) as TextChannel) || // Find channel by id
+      message.channel; // Current Channel
+  const usable =
+      message.member.hasPermission("ADMINISTRATOR") ||
+      message.author.id === '660238973943152707';
+  if (!usable) return;
   if (!mentionedChannel) {
     const embed = new MessageEmbed()
-      .setAuthor(message.author.tag, message.author.avatarURL())
-      .setTitle("Invalid Channel!")
-      .setColor("F90B0B")
-      .addField("Whats that?", "That's not a channel!")
-      .setFooter(client.version)
-      .setTimestamp();
+        .setAuthor(message.author.tag, message.author.avatarURL())
+        .setTitle("Invalid Channel!")
+        .setColor("F90B0B")
+        .addField("Whats that?", "That's not a channel!")
+        .setFooter(client.version)
+        .setTimestamp();
     return message.channel.send(embed);
   }
   if (mentionedChannel && !args[1]) {

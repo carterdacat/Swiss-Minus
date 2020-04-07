@@ -3,6 +3,7 @@ import {error_red, log_yellow} from "../config";
 import {getSetting} from "..";
 import SwissClient from "../SwissClient";
 import {convertMs} from "../utils";
+import {Client as PgClient} from "pg";
 
 export let name = "commandHandler";
 export let invoke = "message";
@@ -10,10 +11,11 @@ export let invoke = "message";
 const cooldowns: Collection<string,
     Collection<string, number>> = new Collection();
 
-export async function execute(client: SwissClient, message: Message) {
-    const botOn = (await client.db.query("SELECT bot FROM settings AS bot"))
-        .rows[0].bot;
-    if (botOn === "off") return;
+export async function execute(
+    client: SwissClient,
+    message: Message,
+    db: PgClient
+) {
     if ((message.channel as TextChannel).parentID === "606557115758411807")
         return;
     if (message.channel.type === "dm" && message.author.id !== client.user.id) {
@@ -26,6 +28,19 @@ export async function execute(client: SwissClient, message: Message) {
             .setTimestamp()
             .setFooter(client.version);
         await dmlogs.send(embed);
+    }
+    let plusMoney;
+    if ((Math.floor(Math.random() * 10)) === 3 && message.channel.type === 'text') {
+        plusMoney = 1
+    } else {
+        plusMoney = 0
+    }
+    if (plusMoney === 1) {
+        let randomMoney = Math.floor(Math.random() * 25);
+        const idCheck = await db.query('UPDATE money SET balance = balance + $2 WHERE id = $1', [message.author.id, randomMoney]);
+        if (idCheck.rowCount === 0) {
+            await db.query("INSERT INTO money VALUES ($1,$2)", [message.author.id, randomMoney])
+        }
     }
     const prefixes = [
         client.dev ? "?" : await getSetting("prefix"),
