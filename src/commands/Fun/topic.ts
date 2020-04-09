@@ -16,7 +16,6 @@ const quotes = [
   "Is it half full, or half empty",
   "Twix left, or twix right",
   "Is the max safe?",
-  "Democrat or Republican",
   "What have you been up to recently?",
   "Whats your favourite plane?",
   "SwissBot or SwissMinus?",
