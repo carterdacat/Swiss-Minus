@@ -306,7 +306,7 @@ export async function execute(
   let no = new MessageEmbed()
     .setColor(error_red)
     .setDescription(
-      "Thats a error! Either the card you submitted was incorrect, or something happened. When typing in a card, please use this format: For all planes with two words in it do this: `!cards <thing 1> <thing2>` for example: `!card boeing 747`. If the plane is the max, please do `!card boeing 737max` instead. If the plane is the Boeing 747, do `!plane boeing747`. Thank you for your help!"
+      "There was an error! Either the card you submitted was incorrect, or something happened. When typing in a card, please use this format: For all planes with two words in it do this: `!cards <thing 1> <thing2>` for example: `!card boeing 747`. If the plane is the max, please do `!card boeing 737max` instead. If the plane is the Boeing 747, do `!plane boeing747`. Thank you for your help!"
     )
     .setTimestamp()
     .setFooter(client.version);
