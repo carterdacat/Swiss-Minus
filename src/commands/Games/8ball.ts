@@ -32,17 +32,13 @@ const fortunes = [
   "Very doubtful"
 ];
 
-export async function execute(
-  client: SwissClient,
-  message: Message,
-  _args: string[]
-) {
+export async function execute(client: SwissClient, message: Message, _args: string[]) {
+
   const embed = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL())
-    .setTitle("Your fortune is:")
     .setDescription(getRandom(fortunes))
     .setColor(swiss_blue)
     .setFooter(client.version)
     .setTimestamp();
-  message.channel.send(embed);
+  await message.channel.send(embed);
 }
