@@ -19,7 +19,8 @@ export async function execute(
 ) {
     let mentionedUser = message.mentions.users.first() || //Mention
         message.author; //The user
-    let bal = await db.query(`SELECT balance FROM money WHERE id = $1`, [mentionedUser]);
+    let bal = await db.query(`SELECT balance FROM money WHERE id = $1`, [mentionedUser.id]);
+    console.log(bal);
     let currency;
     if (bal.rowCount === 0) {
         await db.query("INSERT INTO money VALUES ($1,$2)", [mentionedUser, 0]);

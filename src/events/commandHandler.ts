@@ -34,7 +34,7 @@ export async function execute(
         await dmlogs.send(embed);
     }
     let plusMoney;
-    if ((Math.floor(Math.random() * 10)) === 3 && message.channel.type === 'text' && prefixes.some(prefix => message.content.startsWith(prefix)) && message.author.bot
+    if ((Math.floor(Math.random() * 10)) === 3 && message.channel.type === 'text' && !prefixes.some(prefix => message.content.startsWith(prefix)) && message.author.bot
     ) {
         plusMoney = 1
     } else {
