@@ -28,6 +28,7 @@ export async function execute(
   message: Message,
   args: string[]
 ) {
+  if (!message.member.hasPermission("MANAGE_MESSAGES")) return;
   // Input the channel
   const channelEmbed = new MessageEmbed()
     .setDescription(
