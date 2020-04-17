@@ -1,6 +1,6 @@
 {
   "name": "swiss-minus",
-  "version": "3.10.0",
+  "version": "3.11.1",
   "main": "src/index.ts",
   "engines": {
     "node": "12.11.1",
