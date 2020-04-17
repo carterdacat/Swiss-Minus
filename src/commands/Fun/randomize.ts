@@ -20,5 +20,5 @@ export async function execute(
         else msg[a] = msg[a].toUpperCase();
     }
     msg = msg.join('');
-    await message.channel.send(msg)
+    return await message.channel.send(msg)
 }

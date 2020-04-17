@@ -9,7 +9,7 @@ export let cooldown = 5;
 
 export async function execute(client: SwissClient, message: Message, _args: string[]) {
 
-    let mentioned = message.mentions.members.first()
+    let mentioned = message.mentions.members.first();
 
     if(mentioned){
         await message.channel.send({
