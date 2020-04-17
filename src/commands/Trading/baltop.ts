@@ -17,11 +17,11 @@ export async function execute(
     _args: string[]
 ) {
     let idArray = await client.db.query('SELECT id FROM money order by balance desc fetch first 5 rows only');
-    let p1b = await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[0].id]);
-    let p2b = await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[1].id]);
-    let p3b = await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[2].id]);
-    let p4b = await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[3].id]);
-    let p5b = await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[4].id]);
+    let p1b = await (await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[0].id])).rows[0].balance;
+    let p2b = await (await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[1].id])).rows[0].balance;
+    let p3b = await (await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[2].id])).rows[0].balance;
+    let p4b = await (await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[3].id])).rows[0].balance;
+    let p5b = await (await client.db.query('SELECT balance FROM money WHERE id = $1', [idArray.rows[4].id])).rows[0].balance;
 
     let embed = new MessageEmbed as MessageEmbed;
     embed
