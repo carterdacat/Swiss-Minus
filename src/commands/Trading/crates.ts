@@ -146,7 +146,7 @@ export async function execute(
       mes = mes + "```";
       message.author.send(mes);
       let messa = `UPDATE cards SET common = common - 1 WHERE id = '${message.author.id}'`;
-      return await db.query(messa);
+      return db.query(messa);
     }
     if (
       args[1] === "rare" &&
@@ -228,7 +228,7 @@ export async function execute(
       mes = mes + "```";
       message.author.send(mes);
       let messa = `UPDATE cards SET rare = rare - 1 WHERE id = '${message.author.id}'`;
-      return await db.query(messa);
+      return db.query(messa);
     }
     if (
       args[1] === "jumbo" &&
@@ -292,7 +292,7 @@ export async function execute(
       mes = mes + "```";
       message.author.send(mes);
       let messa = `UPDATE cards SET jumbo = jumbo - 1 WHERE id = '${message.author.id}'`;
-      return await db.query(messa);
+      return db.query(messa);
     }
     if (
       args[1] === "ultra" &&
@@ -352,7 +352,7 @@ export async function execute(
       mes = mes + "```";
       message.author.send(mes);
       let messa = `UPDATE cards SET ultra = ultra - 1 WHERE id = '${message.author.id}'`;
-      return await db.query(messa);
+      return db.query(messa);
     }
     if (
       args[1] === "ledgendary" &&
@@ -377,7 +377,7 @@ export async function execute(
       mes = mes + "```";
       message.author.send(mes);
       let messa = `UPDATE cards SET ledgendary = ledgendary - 1 WHERE id = '${message.author.id}'`;
-      return await db.query(messa);
+      return db.query(messa);
     }
     let no = new MessageEmbed()
       .setColor(error_red)
