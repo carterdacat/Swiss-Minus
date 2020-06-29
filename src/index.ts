@@ -40,16 +40,12 @@ client.on("message", async message => {
     else if (command === banCmdName) {
         console.log("tets")
         const mentioned = message.mentions.members.first();
-        console.log(mentioned)
-        if (!mentioned) return
-        if (mentioned.roles.highest.id === "726865186081996821") {
             const notElimintated = await message.guild.roles.cache.get("726865186081996821")
             const elimintaed = await message.guild.roles.cache.get("726865385378414594")
             mentioned.roles.remove(notElimintated)
             mentioned.roles.add(elimintaed)
             const banLogs = client.channels.cache.get("726867278695628871") as TextChannel;
-            await banLogs.send(`<@${mentioned.id}> has been banned`);
-        }
+            await banLogs.send(`<@${mentioned.id}> has been banned`)
     }
     else if (command === "setnicknames") {
         message.guild.members.cache.forEach(member => {
