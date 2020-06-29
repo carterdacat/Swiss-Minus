@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="dddd18c8-8398-4fb0-b90b-cc1f9decf273">
-        <schema name="public" object-types="view, index, sequence, constraint, table, dataset trigger, function, column" />
+        <schema name="public" object-types="sequence, constraint, index, table, view, function, column, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
@@ -288,6 +288,8 @@
           <content-type name="SQL" enabled="true" />
           <content-type name="PL/SQL" enabled="true" />
           <content-type name="JavaScript" enabled="true" />
+          <content-type name="JSON" enabled="true" />
+          <content-type name="JSON5" enabled="true" />
           <content-type name="JSP" enabled="true" />
           <content-type name="JSPx" enabled="true" />
           <content-type name="ASP" enabled="true" />

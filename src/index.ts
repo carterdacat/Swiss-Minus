@@ -1,224 +1,86 @@
-/* eslint-disable consistent-return */
-/* eslint-disable global-require */
-import dotenv from "dotenv";
-import express from "express";
-import { MessageEmbed, TextChannel } from "discord.js";
-import { join } from "path";
-import { Client as PgClient } from "pg";
-// import { version } from "../package.json"; importing it like this includes the package.json in the build which includes the src folder
-const { version } = require("../package.json");
-import planes from "./planes";
-import SwissClient from "./SwissClient";
-// import { log_yellow, error_red } from "./config";
-// import ffmpeg from "ffmpeg-static";
-// import opus from "node-opus";
-// import ytdl from "ytdl-core";
+import Discord, { TextChannel } from "discord.js"
+import dotenv from "dotenv"
 
-dotenv.config({ path: join(__dirname, "../.env") });
-const dev = process.env.dev ? true : false;
-const aplanes = Object.values(planes);
-const db = new PgClient({
-  connectionString: dev ? process.env.dev_db_url : process.env.DATABASE_URL,
-  ssl: true
-});
-db.connect().then(_ => {
-  console.log("Connected to database.");
-});
+const dotenvConfg = dotenv.config();
 
-const client = new SwissClient(
-  { db, dev, version, commandPath: "./commands", eventPath: "./events" },
-  { partials: ["MESSAGE", "CHANNEL", "REACTION"] }
-);
-let count: number;
-let lengthe = aplanes.length;
-const forloop = async (_: string) => {
-  for (
-    count = 1;
-    lengthe * 2 >
-    (((
-      await db.query(
-        "SELECT count(*) FROM information_schema.columns WHERE table_name = 'cards'"
-      )
-    ).rows[0].count - 8) as number);
-    count++
-  ) {
-    let levels = planes[count].name + "levels";
-    let counts = planes[count].name + "count";
-    let textl = `ALTER TABLE cards ADD COLUMN IF NOT EXISTS ${levels} int`;
-    let textc = `ALTER TABLE cards ADD COLUMN IF NOT EXISTS ${counts} int`;
-    await db.query(textl);
-    await db.query(textc);
-  }
-};
-forloop("_");
-client.on("messageReactionAdd", async reaction => {
-  if (reaction.message.partial) await reaction.message.fetch();
-  if (reaction.message.id === "687721364098252811") {
-    await db.query("UPDATE settings SET value = 'on' WHERE name = 'bot'");
-  }
-});
-client.login(process.env.token).then(async _token => {
-  console.log(`Ready as ${client.user.tag}`);
-  client.user
-    .setActivity(`the ${version} update`, { type: "WATCHING" })
-    .then()
-    .catch(console.error);
-});
-
-export async function getSetting(name: string) {
-  const res = await db.query("SELECT value FROM settings WHERE name = $1", [
-    name
-  ]);
-  return res.rows[0].value;
+const client = new Discord.Client();
+let banCmdName = "ban"
+client.on("message", async message => {
+    const chaos = client.channels.cache.get("726860324992581682") as TextChannel
+    let timesRan = 0
+    if (message.channel.id !== "726860324992581682") return;
+    const prefix: any = await getPrefix(message, this.data, this.client);
+    if (!prefix) return;
+    const args = message.content
+        .slice(typeof prefix === "string" ? prefix.length : 0)
+        .trim()
+        .split(/ +/g);
+    const command = args.shift().toLowerCase();
+    if (command === "start" && message.author.id === "660238973943152707") {
+        const notElimintated = await message.guild.roles.cache.get("726865186081996821")
+        console.log(notElimintated)
+        chaos.updateOverwrite(notElimintated, {
+            "SEND_MESSAGES": true,
+        })
+        const interval = setInterval(() => {
+            timesRan++
+            if (timesRan > 5) {
+                chaos.updateOverwrite(notElimintated, {
+                    "SEND_MESSAGES": false,
+                })
+                clearInterval(interval)
+            }
+            chaos.send("Heads up! The command has changed to !" + banCmdName)
+            const generateRandomString = function(length=5){
+                return Math.random().toString(20).substr(2, length)
+            }
+            banCmdName = generateRandomString()
+        }, 10000)
+    }
+    else if (command === banCmdName) {
+        console.log("tets")
+        const mentioned = message.mentions.members.first();
+        console.log(mentioned)
+        if (!mentioned) return
+        if (mentioned.roles.highest.id === "726865186081996821") {
+            const notElimintated = await message.guild.roles.cache.get("726865186081996821")
+            const elimintaed = await message.guild.roles.cache.get("726865385378414594")
+            mentioned.roles.remove(notElimintated)
+            mentioned.roles.add(elimintaed)
+            const banLogs = client.channels.cache.get("726867278695628871") as TextChannel;
+            await banLogs.send(`<@${mentioned.id}> has been banned`);
+        }
+    }
+    else if (command === "setnicknames") {
+        message.guild.members.cache.forEach(member => {
+            if (member.roles.highest.id !== "726857867826692217" && member.roles.highest.id !== "726867896420008037") {
+                member.setNickname("!!!");
+            }
+       })
+   }
+})
+client.on("rateLimit", e => {
+    console.log(e)
+})
+client.on("ready",() => {
+    console.log("Bots online")
+})
+async function getPrefix(
+    message: { channel: { type: string }; client: { user: { id: any } }; content: string },
+    data: { guild: any; member?: any; user?: any },
+    client: { config: { botname: any } }
+) {
+    if (message.channel.type !== "dm") {
+        const prefixes = ["!"];
+        let prefix = null;
+        prefixes.forEach((p) => {
+            if (message.content.startsWith(p)) {
+                prefix = p;
+            }
+        });
+        return prefix;
+    } else {
+        return true;
+    }
 }
-
-// YouTube search without API
-import puppeteer from "puppeteer";
-import { URLSearchParams } from "url";
-class Video {
-  id: string;
-  url: string;
-  title: string;
-  numViews: string;
-  thumbnail: string;
-  releaseDate: string;
-
-  constructor(_) {
-    this.id = _.videoId;
-    this.url = `https://youtube.com/watch?v=${_.videoId}`;
-    this.title = _.title.runs[0].text;
-    this.numViews = _.viewCountText.simpleText;
-    this.thumbnail = _.thumbnail.thumbnails[0].url;
-    this.releaseDate = _.publishedTimeText.simpleText;
-  }
-}
-const sleep = (seconds: number = 1) =>
-  new Promise(resolve => setTimeout(resolve, seconds * 1000));
-async function searchYoutubeVideos(searchTerm, amount) {
-  const browser = await puppeteer.launch({
-    headless: !dev,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  });
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 800 });
-  await page.goto(
-    `https://www.youtube.com/results?${new URLSearchParams({
-      search_query: searchTerm
-    }).toString()}&sp=EgIQAQ%253D%253D`,
-    { timeout: 60000 }
-  );
-  await sleep(1);
-  await page.evaluate(() => {
-    //@ts-ignore
-    window.scrollTo(
-      0,
-      //@ts-ignore
-      document.body.scrollHeight || document.documentElement.scrollHeight
-    );
-  });
-  await sleep(1);
-  await page.evaluate(() => {
-    //@ts-ignore
-    window.scrollTo(
-      0,
-      //@ts-ignore
-      document.body.scrollHeight || document.documentElement.scrollHeight
-    );
-  });
-  await sleep(1);
-  await page.evaluate(() => {
-    //@ts-ignore
-    window.scrollTo(
-      0,
-      //@ts-ignore
-      document.body.scrollHeight || document.documentElement.scrollHeight
-    );
-  });
-  await sleep(1);
-  await page.evaluate(() => {
-    //@ts-ignore
-    window.scrollTo(
-      0,
-      //@ts-ignore
-      document.body.scrollHeight || document.documentElement.scrollHeight
-    );
-  });
-  await sleep(1);
-  await page.evaluate(() => {
-    //@ts-ignore
-    window.scrollTo(
-      0,
-      //@ts-ignore
-      document.body.scrollHeight || document.documentElement.scrollHeight
-    );
-  });
-  await sleep(1);
-  await page.evaluate(() => {
-    //@ts-ignore
-    window.scrollTo(
-      0,
-      //@ts-ignore
-      document.body.scrollHeight || document.documentElement.scrollHeight
-    );
-  });
-  await sleep(1);
-  const results = await page.evaluate(() => {
-    //@ts-ignore
-    return window.ytInitialData.contents.twoColumnSearchResultsRenderer
-      .primaryContents.sectionListRenderer.contents[0].itemSectionRenderer
-      .contents;
-  });
-  const videos: Video[] = results
-    .map(v => v.videoRenderer)
-    .filter(video => video.ownerText.runs[0].text === "Swiss001")
-    .map(v => new Video(v));
-  await browser.close();
-  return videos.slice(0, amount);
-}
-const cachedVideos = [];
-
-// Express stuff
-const app = express();
-app.set("views", join(__dirname, "../webpage/views"));
-app.set("view engine", "ejs");
-app.use(express.static(join(__dirname, "../webpage/public")));
-app.get("/", (req, res) => {
-  res.render("home", { videos: cachedVideos });
-});
-app.get("/pubsubhubbub", (req, res) => {
-  const { channel_id } = req.query;
-  searchYoutubeVideos("Swiss001", 30)
-    .then(() => {
-      client.channels.fetch(channel_id).then((channel: TextChannel) => {
-        const embed = new MessageEmbed()
-          .setAuthor(`Swiss001 | New Video!`)
-          .setTitle(cachedVideos[0].title)
-          .setURL(`https://youtube.com/watch?v=${cachedVideos[0].id}`)
-          .setFooter(version)
-          .setTimestamp();
-        channel.send(embed);
-      });
-      res.redirect("/");
-    })
-    .catch(error => {
-      console.error(error);
-      res.redirect("error");
-    });
-});
-app.get("/about", (req, res) => {
-  res.render("about", {});
-});
-app.use("*", (req, res, next) => {
-  res.render("404");
-});
-
-searchYoutubeVideos("Swiss001", 30)
-  .then(results => {
-    results.forEach(r => cachedVideos.push(r));
-    app.listen(process.env.PORT, () => {
-      console.log(
-        `Webserver running on port ${process.env.PORT}, http://localhost:${process.env.PORT}`
-      );
-    });
-  })
-  .catch(console.error);
+client.login(process.env.token)
