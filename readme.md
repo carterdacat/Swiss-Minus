@@ -40,7 +40,5 @@ Example: `This branch is 4 commits behind carterdacat:master.`
 ### Bot Token
 1. Make a `.env` file for the tokens.
 2. You will find the tokens in the discord server that carterdacat invited you to.
-
-
 ## Starting Your Bot
 Type `npm run dev` in your Git Bash window to start the discord bot.
